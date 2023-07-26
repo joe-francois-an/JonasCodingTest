@@ -4,6 +4,7 @@ using AutoMapper;
 using BusinessLayer.Model.Models;
 using DataAccessLayer.Model.Interfaces;
 using DataAccessLayer.Model.Models;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Services
 {
@@ -17,29 +18,29 @@ namespace BusinessLayer.Services
             _companyRepository = companyRepository;
             _mapper = mapper;
         }
-        public IEnumerable<CompanyInfo> GetAllCompanies()
+        public async Task<IEnumerable<CompanyInfo>> GetAllCompaniesAsync()
         {
-            return _mapper.Map<IEnumerable<CompanyInfo>>(_companyRepository.GetAll());
+            return _mapper.Map<IEnumerable<CompanyInfo>>(await _companyRepository.GetAllAsync());
         }
 
-        public CompanyInfo GetCompanyByCode(string companyCode)
+        public async Task<CompanyInfo> GetCompanyByCodeAsync(string companyCode)
         {
-            return _mapper.Map<CompanyInfo>(_companyRepository.GetByCode(companyCode));
+            return _mapper.Map<CompanyInfo>(await _companyRepository.GetByCodeAsync(companyCode));
         }
 
-        public bool CreateCompany(CompanyInfo company)
+        public async Task<bool> CreateCompanyAsync(CompanyInfo company)
         {
-            return _companyRepository.SaveCompany(_mapper.Map<Company>(company));
+            return await _companyRepository.SaveCompanyAsync(_mapper.Map<Company>(company));
         }
 
-        public bool UpdateCompany(CompanyInfo company)
+        public async Task<bool> UpdateCompanyAsync(CompanyInfo company)
         {
-            return _companyRepository.SaveCompany(_mapper.Map<Company>(company));
+            return await _companyRepository.SaveCompanyAsync(_mapper.Map<Company>(company));
         }
 
-        public bool DeleteCompany(string companyCode)
+        public async Task<bool> DeleteCompanyAsync(string companyCode)
         {
-            return _companyRepository.DeleteCompany(companyCode);
+            return await _companyRepository.DeleteCompanyAsync(companyCode);
         }
     }
 }

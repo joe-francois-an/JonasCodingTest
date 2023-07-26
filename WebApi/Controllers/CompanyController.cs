@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using BusinessLayer.Model.Interfaces;
@@ -18,33 +19,33 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
         // GET api/<controller>
-        public IEnumerable<CompanyDto> GetAll()
+        public async Task<IEnumerable<CompanyDto>> GetAll()
         {
-            return _mapper.Map<IEnumerable<CompanyDto>>(_companyService.GetAllCompanies());
+            return _mapper.Map<IEnumerable<CompanyDto>>(await _companyService.GetAllCompaniesAsync());
         }
 
         // GET api/<controller>/5
-        public CompanyDto Get(string companyCode)
+        public async Task<CompanyDto> Get(string companyCode)
         {
-            return _mapper.Map<CompanyDto>(_companyService.GetCompanyByCode(companyCode));
+            return _mapper.Map<CompanyDto>(await _companyService.GetCompanyByCodeAsync(companyCode));
         }
 
         // POST api/<controller>
-        public bool Post([FromBody] CompanyDto company)
+        public async Task<bool> Post([FromBody] CompanyDto company)
         {
-            return _companyService.CreateCompany(_mapper.Map<CompanyInfo>(company));
+            return await _companyService.CreateCompanyAsync(_mapper.Map<CompanyInfo>(company));
         }
 
         // PUT api/<controller>/5
-        public bool Put(string companyCode, [FromBody] CompanyDto company)
+        public async Task<bool> Put(string companyCode, [FromBody] CompanyDto company)
         {
-            return _companyService.UpdateCompany(_mapper.Map<CompanyInfo>(company));
+            return await _companyService.UpdateCompanyAsync(_mapper.Map<CompanyInfo>(company));
         }
 
         // DELETE api/<controller>/5
-        public bool Delete(string companyCode)
+        public async Task<bool> Delete(string companyCode)
         {
-            return _companyService.DeleteCompany(companyCode);
+            return await _companyService.DeleteCompanyAsync(companyCode);
         }
     }
 }
