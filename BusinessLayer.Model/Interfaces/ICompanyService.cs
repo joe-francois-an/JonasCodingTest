@@ -7,5 +7,8 @@ namespace BusinessLayer.Model.Interfaces
     {
         IEnumerable<CompanyInfo> GetAllCompanies();
         CompanyInfo GetCompanyByCode(string companyCode);
+        bool CreateCompany(CompanyInfo company);
+        bool UpdateCompany(CompanyInfo company);
+        bool DeleteCompany(string companyCode);
     }
 }
